@@ -17,7 +17,33 @@ Account::Account(const Account& A)
     BankAmount = A.BankAmount;
     type = A.type;
 }
+void Account::AccountOptions(){
+    char answer;
 
+    cout << "+++++++++++++++++++++++++++++++++++++++++\n";
+    cout << "+\t" <<"Different Account Opotions" << "\t+\n";
+    cout << "+\t" <<"C: Checking Account" << "\t\t+\n";
+    cout << "+\t" << "S: Savings Account" << "\t\t+\n";
+    cout << "+++++++++++++++++++++++++++++++++++++++++\n";
+    cout << "Please choose an Account type from the menu\n";
+    cout << ">";
+    cin >> answer;
+    switch(answer){
+        case 'C':
+        case 'c':
+                type = CHECKINGS;
+                break;
+        case 'S':
+        case 's':
+                type = SAVINGS;
+                break;
+        default: 
+                cout << "Invaild Option" << endl;
+                cout << "Set to Default Type: Checking" << endl;
+                type = CHECKINGS;
+                break;
+    }
+}
 //Initalization of the account 
 void Account::Setup(){
     char answer;
@@ -26,16 +52,7 @@ void Account::Setup(){
     //Random Account number for each account
     AccountNumber = rand() % 1000 + 1;
     
-    cout << "What type of account do you want [C for checking,S for saving]: ";
-    cin >> answer;
-    answer = toupper(answer);
-    if( answer = 'C')
-    {
-        type = CHECKINGS;
-    }else if(answer = 'S')
-    {
-        type = SAVINGS;
-    } 
+    AccountOptions();
     
     cout << "Enter first name: ";
     cin >> FirstName;
