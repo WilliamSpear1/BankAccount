@@ -23,7 +23,7 @@ Account Create(){
     cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n\n";
     
     account.Setup();
-    cout  << "Thank you for the creation of your account heres is a summary of all the information we have of you\n\n";
+    cout  << "\nThank you for the creation of your account heres is a summary of all the information we have of you\n\n";
 
     return account;
 }

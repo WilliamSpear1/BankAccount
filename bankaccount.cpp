@@ -64,7 +64,7 @@ void Account::Setup(){
 
 double Account::Deposit(double amount){
     BankAmount = BankAmount + amount;
-    cout << "Amount: " << amount << " has been successfully added to your account\n";
+    cout << "Amount:$ " << amount << " has been successfully added to your account\n";
     cout << "Thank you" << endl;
     return BankAmount; 
 }
@@ -72,7 +72,7 @@ double Account::Deposit(double amount){
 double Account::Withdraw(double amount){
     if(amount > BankAmount)
     {
-        cout << "Error: " << amount << " is greater then what is inside bank account\n";
+        cout << "Error:$ " << amount << " is greater then what is inside bank account\n";
         return 0; 
     }
     BankAmount = BankAmount - amount;
