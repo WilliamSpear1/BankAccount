@@ -1,5 +1,4 @@
 #include<iostream>
-#include<cstring>
 #include<stdlib.h>
 #include<string>
 #include<time.h>
