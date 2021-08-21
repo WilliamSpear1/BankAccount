@@ -1,11 +1,13 @@
 #include<iostream>
 #include<cstring>
 #include<stdlib.h>
+#include<string>
+#include<time.h>
 using namespace std;
 
 #ifndef _BANK_H
 #define _BANK_H
-enum AccountType {Checking,Saving};
+enum AccountType {CHECKINGS,SAVINGS};
 class Account{
     public:
         Account(); //default constructor
@@ -14,13 +16,15 @@ class Account{
         void Setup();//Function that allows the setting up of account
         double Deposit(double);
         double Withdraw(double);
-        void GetName();
+        string GetFirstName();
+        string GetLastName(); 
         int GetAccountNumber();
         double GetBankAmount();
-        AccountType GetType();
+        string GetType();
+        void AccountOptions();
     private:
-        char FirstName[30];
-        char LastName[30];
+        string FirstName;
+        string LastName;
         int AccountNumber;
         AccountType type;
         double BankAmount;
