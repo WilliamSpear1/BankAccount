@@ -1,8 +1,6 @@
 #include"bankaccount.h"
-#include<iostream>
-using namespace std;
 
-//Function declarions
+//Needed for functions, that are called inside functions that might not be in scope 
 void SetupAccount();
 char choices(char,Account);
 
@@ -18,7 +16,7 @@ Account Create(){
     Account account;
     
     cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
-    cout << "+\t" <<" Hello\t" << "\t\t\t\t\t\t+\n";
+    cout << "+\t" <<"Hello\t" << "\t\t\t\t\t\t+\n";
     cout << "+\t" << "Please Follow the steps to Create an Account with us\t" << "+\n";
     cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n\n";
     
@@ -58,6 +56,7 @@ Account Deposit(Account account)
     
     return account;
 }
+
 Account Withdraw(Account account)
 {
    double amount;
@@ -86,11 +85,12 @@ void AccountSummary(Account account)
     cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
     cout << "+\t" << "Hello here is the summary of your Account\t" << "\t+\n";
     cout << "+\t" << "Account Number: " << accountnumber << "\t\t\t\t\t+\n"; 
-    cout << "+\t" << "Amount within the BankAccount: " << bankamount << "\t\t\t+\n";
+    cout << "+\t" << "Amount within the BankAccount: " << fixed << setprecision(2) << bankamount << "\t\t\t+\n";
     cout << "+\t" << "First Name: " << FName << "\t\t\t\t\t+\n";
     cout << "+\t" << "Last Name: " << LName << "\t\t\t\t\t+\n";
     cout << "+\t";
     cout << "Account Type: ";
+    
     if(type == checking)
     {
        cout << "Checking";
@@ -99,6 +99,7 @@ void AccountSummary(Account account)
     {
         cout << "Savings";
     }
+    
     cout << "\t\t\t\t\t+\n";
     cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
 }
@@ -107,6 +108,7 @@ int main()
 {
     char choice; 
     Account account; 
+    
     Welcome();
     account = Create();
     AccountSummary(account);

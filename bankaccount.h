@@ -2,17 +2,20 @@
 #include<stdlib.h>
 #include<string>
 #include<time.h>
+#include<iomanip>
 using namespace std;
 
 #ifndef _BANK_H
 #define _BANK_H
-enum AccountType {CHECKINGS,SAVINGS};
+enum AccountType {CHECKINGS,SAVINGS};//Types of accounts allowed in the bank
+
 class Account{
+    
     public:
-        Account(); //default constructor
-        Account(const Account&);
-        ~Account();
-        void Setup();//Function that allows the setting up of account
+        Account();//Default Constructor
+        Account(const Account&);//Deep Copoy Constructor 
+        ~Account();//Deconstructor not needed as of yet??
+        void Setup();//Inital setup of account for the bank
         double Deposit(double);
         double Withdraw(double);
         string GetFirstName();
@@ -20,7 +23,8 @@ class Account{
         int GetAccountNumber();
         double GetBankAmount();
         string GetType();
-        void AccountOptions();
+        void AccountOptions();//Allows for different types of accounts
+    
     private:
         string FirstName;
         string LastName;

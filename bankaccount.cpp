@@ -1,5 +1,4 @@
 #include "bankaccount.h"
-using namespace std;
 
 Account::Account(){
     BankAmount = 0.0;
@@ -8,7 +7,6 @@ Account::Account(){
 //Deconstructor empty for now could possibly be used down the road
 Account::~Account(){}
 
-//Copy Constructor 
 Account::Account(const Account& A)
 {
     AccountNumber = A.AccountNumber;
@@ -17,6 +15,7 @@ Account::Account(const Account& A)
     BankAmount = A.BankAmount;
     type = A.type;
 }
+
 void Account::AccountOptions(){
     char answer;
 
@@ -28,6 +27,7 @@ void Account::AccountOptions(){
     cout << "Please choose an Account type from the menu\n";
     cout << ">";
     cin >> answer;
+    
     switch(answer){
         case 'C':
         case 'c':
@@ -44,14 +44,14 @@ void Account::AccountOptions(){
                 break;
     }
 }
-//Initalization of the account 
+
 void Account::Setup(){
     char answer;
-    srand(time(NULL));
+    srand(time(NULL));//inital seed for randomization
 
-    //Random Account number for each account
-    AccountNumber = rand() % 1000 + 1;
+    AccountNumber = rand() % 1000 + 1;//Random Account number for each account
     
+    //Above function that allows a menu to select an account type 
     AccountOptions();
     
     cout << "Enter first name: ";
@@ -72,11 +72,11 @@ double Account::Deposit(double amount){
 double Account::Withdraw(double amount){
     if(amount > BankAmount)
     {
-        cout << "Error:$ " << amount << " is greater then what is inside bank account\n";
+        cout << "Error:$" << amount << " is greater then what is inside bank account\n";
         return 0; 
     }
     BankAmount = BankAmount - amount;
-    cout << "Thank you" << " the amount of " << amount << " has been successfully withdrawn from your account\n";
+    cout << "Thank you" << " the amount of $" << amount << " has been successfully withdrawn from your account\n";
     return BankAmount;
 }
 
@@ -93,11 +93,13 @@ int Account::GetAccountNumber(){
 }
 
 double Account::GetBankAmount(){
-   return BankAmount; 
+     
+    return BankAmount; 
 }
 
 string Account::GetType(){
     string answer;
+
     if(type == CHECKINGS)
     {
         answer = "Checkings";
