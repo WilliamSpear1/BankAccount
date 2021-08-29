@@ -36,7 +36,7 @@ int Welcome()
     return status;
 }
 
-Account Create(){
+Account Create(string username, string password){
     Account account;
     
     cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
@@ -45,9 +45,34 @@ Account Create(){
     cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n\n";
     
     account.Setup();
-    cout  << "\nThank you for the creation of your account heres is a summary of all the information we have of you\n\n";
+    
+    string Fname = account.GetFirstName();
+    string Lname = account.GetLastName();
+    int ANumber = account.GetAccountNumber();
+    
+    string ANumberS = to_string(ANumber);
+    
+    sql::Driver *driver;
+    sql::Connection *con;
+    sql::Statement *stmt;
+    sql::ResultSet *res;
 
+    driver = sql::mysql::get_mysql_driver_instance();
+    con = driver->connect("localhost", username, password);
+    stmt = con -> createStatement();
+    stmt->execute("USE bank");
+    
+    res = stmt -> executeQuery("SELECT * FROM ACCOUNTS ORDER BY LASTNAME");
+    while (res->next())
+    {
+        if(Fname == res -> getString("FirstName") && Lname == res -> getString("LastName")){
+            cout << "\nSorry there is already an account with that last and fist name\n\n"; 
+            account = Create(username,password);
+            break;
+        }
+    }
     return account;
+    cout  << "\nThank you for the creation of your account heres is a summary of all the information we have of you\n\n";
 }
 
 char Menu()
@@ -208,11 +233,12 @@ Account Returned(string username, string password, string Fname, string Lname, i
             account.SetAccountNumber(res->getInt("ACCOUNTNUMBER"));
             account.SetAccountType(res->getString("ACCOUNTTYPE"));
             account.SetAccountAmount(res->getDouble("ACCOUNTAMOUNT"));
-            break; 
+           break; 
         }
     }
     return account;
 }
+
 void PrintDatabase(string username,string password)
 {
 
@@ -229,13 +255,15 @@ void PrintDatabase(string username,string password)
         stmt->execute("USE bank");
         res = stmt -> executeQuery("SELECT * FROM ACCOUNTS ORDER BY LASTNAME");
         
+        cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n"; 
         while (res->next()) {
-            cout << "FirstName = " << res->getString("FIRSTNAME") << endl;
-            cout << "LastName = " << res->getString("LASTNAME") <<  endl;
-            cout << "ACCOUNT NUMBER = " << res->getInt("ACCOUNTNUMBER") << endl;
-            cout << "ACCOUNT TYPE = " << res->getString("ACCOUNTTYPE") <<  endl;
-            cout << "ACCOUNT AMOUNT = " << res->getDouble("ACCOUNTAMOUNT") <<  endl;
+            cout << "\t" << "FirstName = " << res->getString("FIRSTNAME") << "\t";
+            cout << "\t" << "LastName = " << res->getString("LASTNAME") <<  "\t";
+            cout << "\t" << "ACCOUNT NUMBER = " << res->getInt("ACCOUNTNUMBER") << "\t\n";
+            cout << "\t" << "ACCOUNT TYPE = " << res->getString("ACCOUNTTYPE") << "\t";
+            cout << "\t" << "ACCOUNT AMOUNT = " << res->getDouble("ACCOUNTAMOUNT") << "\n\n";
         }
+        cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n"; 
         delete res;
         delete stmt;
         delete con;
@@ -298,8 +326,9 @@ int main()
     cin >> password;
 
     status = Welcome();
+    
     if(status == 2)
-        account = Create();
+        account = Create(username,password);
     else
     {
         cout << "Please provide the First name, Last name, and Account Number\n";
@@ -311,34 +340,39 @@ int main()
         cin >> ANumber;
         account = Returned(username,password,Fname,Lname,ANumber);
     }
+    
     AccountSummary(account);
-    
-    Fname = account.GetFirstName();
-    Lname = account.GetLastName();
-    ANumber = account.GetAccountNumber();
-    string Atype = account.GetType();
-    double Aamount = account.GetBankAmount();
-    
-    string ANumberS = to_string(ANumber);
-    string AamountS = to_string(Aamount);
-    try{ 
-        sql::Driver *driver;
-        sql::Connection *con;
-        sql::Statement *stmt;
-
-        driver = sql::mysql::get_mysql_driver_instance();
-        con = driver->connect("localhost", username, password);
-        
-        stmt = con -> createStatement();
-        stmt->execute("USE bank");
-        stmt->execute("INSERT INTO ACCOUNTS(FIRSTNAME, LASTNAME, ACCOUNTNUMBER, ACCOUNTTYPE, ACCOUNTAMOUNT) VALUES ("+quotesql(Fname)+", "+quotesql(Lname)+", "+ANumberS+", "+quotesql(Atype)+", "+AamountS+")");
-    
-        delete stmt;
-        delete con;
-    }catch(sql::SQLException &e)
+   
+    if(status == 2)
     {
-        cout << "ERROR\n";
-    } 
+        Fname = account.GetFirstName();
+        Lname = account.GetLastName();
+        ANumber = account.GetAccountNumber();
+        string Atype = account.GetType();
+        double Aamount = account.GetBankAmount();
+    
+        string ANumberS = to_string(ANumber);
+        string AamountS = to_string(Aamount);
+    
+        try{ 
+            sql::Driver *driver;
+            sql::Connection *con;
+            sql::Statement *stmt;
+
+            driver = sql::mysql::get_mysql_driver_instance();
+            con = driver->connect("localhost", username, password);
+        
+            stmt = con -> createStatement();
+            stmt->execute("USE bank");
+            stmt->execute("INSERT INTO ACCOUNTS(FIRSTNAME, LASTNAME, ACCOUNTNUMBER, ACCOUNTTYPE, ACCOUNTAMOUNT) VALUES ("+quotesql(Fname)+", "+quotesql(Lname)+", "+ANumberS+", "+quotesql(Atype)+", "+AamountS+")");
+    
+            delete stmt;
+            delete con;
+        }catch(sql::SQLException &e)
+        {
+            cout << "ERROR\n";
+        } 
+    }
     while(choice != 'Z' && choice != 'z')
     {
         choice = Menu(); 
