@@ -61,6 +61,7 @@ char Menu()
     cout << "+\t" << "B: Withdraw Money\t\t" << "+\n";
     cout << "+\t" << "C: Check Amount\t\t\t" << "+\n";
     cout << "+\t" << "D: Display Database\t" << "\t+\n"; 
+    cout << "+\t" << "E: Deletion of Account\t" << "\t+\n"; 
     cout << "+\t" << "Z: Exit\t\t\t\t" << "+\n";
     cout << "+++++++++++++++++++++++++++++++++++++++++\n";
     cout << ">";
@@ -69,30 +70,82 @@ char Menu()
     return menuoptions; 
 }
 
-Account Deposit(Account account)
+Account Deposit(string username,string password,Account account)
 {
-    double amount; 
+    double amount;
+    try
+    {
+        sql::Driver *driver;
+        sql::Connection *con;
+        sql::Statement *stmt;
+
+        driver = sql::mysql::get_mysql_driver_instance();
+        con = driver->connect("localhost", username, password);
+        stmt = con -> createStatement();
+        stmt->execute("USE bank");
     
-    cout << "Hello how much do you wish deposit into your Bank Account\n";
-    cout << "$"; 
     
-    cin >> amount;
-    account.Deposit(amount);
+        cout << "Hello how much do you wish deposit into your Bank Account\n";
+        cout << "$"; 
     
-    return account;
+        cin >> amount;
+        account.Deposit(amount);
+        
+        string Aamount = to_string(account.GetBankAmount()); 
+        string ANumber = to_string(account.GetAccountNumber());
+        
+        stmt -> execute("UPDATE ACCOUNTS SET ACCOUNTAMOUNT="+Aamount+" WHERE ACCOUNTNUMBER="+ANumber+";");
+     
+        delete stmt;
+        delete con;
+
+        return account;
+    }
+    catch(sql::SQLException &e)
+    {
+        cout << "ERROR\n";
+        return account;
+    } 
 }
 
-Account Withdraw(Account account)
+Account Withdraw(string username, string password, Account account)
 {
    double amount;
-   
-   cout << "Hello how much do you wish to withdraw today\n";
-   cout << "$";
-   
-   cin >> amount;
-   account.Withdraw(amount);
-   
-   return account;
+    try
+    {
+        sql::Driver *driver;
+        sql::Connection *con;
+        sql::Statement *stmt;
+
+        driver = sql::mysql::get_mysql_driver_instance();
+        con = driver->connect("localhost", username, password);
+        stmt = con -> createStatement();
+        stmt->execute("USE bank");
+    
+    
+        cout << "Hello how much do you wish to withdraw today\n";
+        cout << "$";
+    
+        cin >> amount;
+        
+        account.Withdraw(amount);
+        
+        string Aamount = to_string(account.GetBankAmount()); 
+        string ANumber = to_string(account.GetAccountNumber());
+        
+        stmt -> execute("UPDATE ACCOUNTS SET ACCOUNTAMOUNT="+Aamount+" WHERE ACCOUNTNUMBER="+ANumber+";");
+     
+        delete stmt;
+        delete con;
+
+        return account;
+    }
+    catch(sql::SQLException &e)
+    {
+        cout << "ERROR\n";
+        return account;
+    } 
+     
 }
 
 void AccountSummary(Account account)
@@ -170,16 +223,8 @@ void PrintDatabase(string username,string password)
         sql::ResultSet *res;
 
         driver = sql::mysql::get_mysql_driver_instance();
-        con = driver->connect("localhost", "Wilabeast", "Shotgun21!");
+        con = driver->connect("localhost", username, password);
     
-        if(con->isValid())
-        {
-            cout << "Connection is valid\n";
-        }
-        else
-        {
-            cout << "Conection is not valid\n";
-        }
         stmt = con -> createStatement();
         stmt->execute("USE bank");
         res = stmt -> executeQuery("SELECT * FROM ACCOUNTS ORDER BY LASTNAME");
@@ -194,11 +239,44 @@ void PrintDatabase(string username,string password)
         delete res;
         delete stmt;
         delete con;
-    }catch(sql::SQLException &e)
+        return;
+    }
+    catch(sql::SQLException &e)
     {
         cout << "ERROR\n";
     } 
 }
+
+void Deletion(string username,string password)
+{
+    int Anumber;
+
+    cout << "Deletion of your Account please provide the account\n";
+    cout << "Account Number: ";
+    cin >> Anumber; 
+
+    string ANumber = to_string(Anumber);
+    try{ 
+        sql::Driver *driver;
+        sql::Connection *con;
+        sql::Statement *stmt;
+        sql::ResultSet *res;
+
+        driver = sql::mysql::get_mysql_driver_instance();
+        con = driver->connect("localhost", username, password);
+        
+        stmt = con -> createStatement();
+        stmt->execute("USE bank");
+        stmt -> execute("DELETE FROM ACCOUNTS WHERE ACCOUNTNUMBER="+ANumber+";");
+        cout << "Deletion Successful Account " +ANumber+ " has been deleted\n";
+        return;
+    }
+    catch(sql::SQLException &e)
+    {
+        cout << "Error\n";
+    }
+}
+
 int main()
 {
     string username;
@@ -214,7 +292,6 @@ int main()
     Account account; 
     
     cout << "Please provide username and password for access\n";
-
     cout << "Username: ";
     cin >> username;
     cout << "Password: ";
@@ -269,11 +346,11 @@ int main()
         {
             case 'A':
             case 'a':
-                        account = Deposit(account);
+                        account = Deposit(username,password,account);
                         break;
             case 'B':
             case 'b':
-                        account = Withdraw(account);
+                        account = Withdraw(username,password,account);
                         break;
             case 'C':
             case 'c':
@@ -282,6 +359,10 @@ int main()
             case 'D':
             case 'd':
                         PrintDatabase(username,password);
+                        break;
+            case 'E':
+            case 'e':
+                        Deletion(username,password);
                         break;
             case 'Z':
             case 'z':
