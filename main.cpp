@@ -133,7 +133,7 @@ string quotesql( const string& s ) {
     return string("'") + s + string("'");
 }
 
-Account Returned(string Fname, string Lname, int ANumber)
+Account Returned(string username, string password, string Fname, string Lname, int ANumber)
 {
     Account account;
     
@@ -143,7 +143,7 @@ Account Returned(string Fname, string Lname, int ANumber)
     sql::ResultSet *res;
 
     driver = sql::mysql::get_mysql_driver_instance();
-    con = driver->connect("localhost", "Wilabeast", "Shotgun21!");
+    con = driver->connect("localhost", username, password);
     stmt = con -> createStatement();
     stmt->execute("USE bank");
     
@@ -160,7 +160,7 @@ Account Returned(string Fname, string Lname, int ANumber)
     }
     return account;
 }
-void PrintDatabase()
+void PrintDatabase(string username,string password)
 {
 
     try{ 
@@ -201,15 +201,25 @@ void PrintDatabase()
 }
 int main()
 {
+    string username;
+    string password;
+
     char choice; 
     char *messageError;
     int status;
+    
     string Fname;
     string Lname;
     int ANumber;
     Account account; 
     
-    
+    cout << "Please provide username and password for access\n";
+
+    cout << "Username: ";
+    cin >> username;
+    cout << "Password: ";
+    cin >> password;
+
     status = Welcome();
     if(status == 2)
         account = Create();
@@ -222,7 +232,7 @@ int main()
         cin >> Lname;
         cout << "Account Number: ";
         cin >> ANumber;
-        account = Returned(Fname,Lname,ANumber);
+        account = Returned(username,password,Fname,Lname,ANumber);
     }
     AccountSummary(account);
     
@@ -240,7 +250,7 @@ int main()
         sql::Statement *stmt;
 
         driver = sql::mysql::get_mysql_driver_instance();
-        con = driver->connect("localhost", "Wilabeast", "Shotgun21!");
+        con = driver->connect("localhost", username, password);
         
         stmt = con -> createStatement();
         stmt->execute("USE bank");
@@ -271,7 +281,7 @@ int main()
                         break;
             case 'D':
             case 'd':
-                        PrintDatabase();
+                        PrintDatabase(username,password);
                         break;
             case 'Z':
             case 'z':
