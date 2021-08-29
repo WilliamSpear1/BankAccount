@@ -5,7 +5,8 @@ Account::Account(){
 }
 
 //Deconstructor empty for now could possibly be used down the road
-Account::~Account(){}
+Account::~Account()
+{}
 
 Account::Account(const Account& A)
 {
@@ -15,10 +16,9 @@ Account::Account(const Account& A)
     BankAmount = A.BankAmount;
     type = A.type;
 }
-
 void Account::AccountOptions(){
     char answer;
-
+    
     cout << "+++++++++++++++++++++++++++++++++++++++++\n";
     cout << "+\t" <<"Different Account Opotions" << "\t+\n";
     cout << "+\t" <<"C: Checking Account" << "\t\t+\n";
@@ -47,11 +47,12 @@ void Account::AccountOptions(){
 
 void Account::Setup(){
     char answer;
+    double amount = GetBankAmount(); 
+
     srand(time(NULL));//inital seed for randomization
 
     AccountNumber = rand() % 1000 + 1;//Random Account number for each account
     
-    //Above function that allows a menu to select an account type 
     AccountOptions();
     
     cout << "Enter first name: ";
@@ -59,7 +60,6 @@ void Account::Setup(){
 
     cout << "Enter last name: ";
     cin >> LastName; 
-   
 }
 
 double Account::Deposit(double amount){
@@ -81,7 +81,7 @@ double Account::Withdraw(double amount){
 }
 
 string Account::GetFirstName(){
-       return FirstName;
+    return FirstName;
 }
 
 string Account::GetLastName(){
@@ -93,7 +93,6 @@ int Account::GetAccountNumber(){
 }
 
 double Account::GetBankAmount(){
-     
     return BankAmount; 
 }
 
@@ -109,4 +108,28 @@ string Account::GetType(){
         answer = "Savings";
     }
     return answer;
+}
+void  Account::SetFirstName(string Fname)
+{
+    FirstName = Fname;
+}
+void Account::SetLastName(string Lname)
+{
+    LastName = Lname;
+}
+void Account::SetAccountNumber(int ANumber)
+{
+    AccountNumber = ANumber; 
+}
+void Account::SetAccountType(string type)
+{
+    if(type == "Checking")
+        type = CHECKINGS;
+    else if(type == "Saving")
+        type = SAVINGS;
+
+}
+void Account::SetAccountAmount(double Aamount)
+{
+   BankAmount = Aamount;  
 }

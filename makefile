@@ -1,5 +1,5 @@
 bankaccount: main.o bankaccount.o 
-	g++  main.o  bankaccount.o  -o BankAccount
+	g++  -Wall -I/usr/include/cppcon main.o  bankaccount.o  -o BankAccount -L/usr/lib -lmysqlcppconn
 main.o: main.cpp bankaccount.h
 	g++ -c  main.cpp
 bankaccount.o: bankaccount.cpp bankaccount.h

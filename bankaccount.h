@@ -5,8 +5,8 @@
 #include<iomanip>
 using namespace std;
 
-#ifndef _BANK_H
-#define _BANK_H
+#ifndef _BANKACCOUNT_H
+#define _BANKACCOUNT_H
 enum AccountType {CHECKINGS,SAVINGS};//Types of accounts allowed in the bank
 
 class Account{
@@ -23,6 +23,12 @@ class Account{
         int GetAccountNumber();
         double GetBankAmount();
         string GetType();
+        void SetFirstName(string Fname);
+        void SetLastName(string Lname);
+        void SetAccountNumber(int ANumber);
+        void SetAccountType(string type);
+        void SetAccountAmount(double Aamount);
+        void AccountCreation();
         void AccountOptions();//Allows for different types of accounts
     
     private:
