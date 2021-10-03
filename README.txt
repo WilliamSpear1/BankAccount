@@ -1,3 +1,9 @@
-Simple Program to simulate the creation of a newly made bank account. Has the functionality of Depositing,Withdrawing,and checking the Account Number,Amount,
-and Name on the Account.Also has mysql database as the backing therefore data persisentce is always in affect. Database reflects changes that occur in running 
-program.
+#Project Tile
+->BankAccount
+#Project Purpose
+->To enable bank accounts with checkings and other accounts and have them load into a Ubuntu server for persistence.
+#Concise Description
+-> Project utilizes C++ code with a Ubuntu Server to create and hold user's accounts.
+->User's are allowed to utilize all CRUD operations such as creating accounts,deleting accounts, updating accounts, and replacing them.
+-> The Mysql database reflects changes made during the program 
+
