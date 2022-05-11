@@ -227,8 +227,8 @@ Account Returned(string username, string password, string Fname, string Lname, i
     
     res = stmt -> executeQuery("SELECT * FROM ACCOUNTS ORDER BY LASTNAME");
     while (res->next()) {
-        if(Fname == res -> getString("FirstName") && Lname == res -> getString("LastName") && ANumber == res -> getInt("ACCOUNTNUMBER")){
-            account.SetFirstName(res -> getString("FirstName"));
+        if(Fname == res -> getString("FIRSTNAME") && Lname == res -> getString("LASTNAME") && ANumber == res -> getInt("ACCOUNTNUMBER")){
+            account.SetFirstName(res -> getString("FIRSTNAME"));
             account.SetLastName(res->getString("LASTNAME"));
             account.SetAccountNumber(res->getInt("ACCOUNTNUMBER"));
             account.SetAccountType(res->getString("ACCOUNTTYPE"));

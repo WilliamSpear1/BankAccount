@@ -49,9 +49,9 @@ void Account::Setup(){
     char answer;
     double amount = GetBankAmount(); 
 
-    srand(time(NULL));//inital seed for randomization
+    srand(time(NULL));                  //inital seed for randomization
 
-    AccountNumber = rand() % 1000 + 1;//Random Account number for each account
+    AccountNumber = rand() % 1000 + 1;  //Random Account number for each account
     
     AccountOptions();
     

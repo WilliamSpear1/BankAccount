@@ -5,7 +5,7 @@
 ## Tech Stack
     - Back-End C++
     - Front-End HTML/CSS/JavaScript
-    - Database SQL
+    - Database MYSQL
 ## Requirments 
     - As of Right now 
         - Installtion of the following tech

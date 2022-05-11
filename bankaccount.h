@@ -7,15 +7,17 @@ using namespace std;
 
 #ifndef _BANKACCOUNT_H
 #define _BANKACCOUNT_H
-enum AccountType {CHECKINGS,SAVINGS};//Types of accounts allowed in the bank
+enum AccountType {
+    CHECKINGS,SAVINGS
+};                                  //Types of accounts allowed in the bank
 
 class Account{
     
     public:
-        Account();//Default Constructor
-        Account(const Account&);//Deep Copoy Constructor 
-        ~Account();//Deconstructor not needed as of yet??
-        void Setup();//Inital setup of account for the bank
+        Account();                  //Default Constructor
+        Account(const Account&);    //Deep Copoy Constructor 
+        ~Account();                 //Deconstructor not needed as of yet??
+        void Setup();               //Inital setup of account for the bank
         double Deposit(double);
         double Withdraw(double);
         string GetFirstName();
@@ -29,7 +31,7 @@ class Account{
         void SetAccountType(string type);
         void SetAccountAmount(double Aamount);
         void AccountCreation();
-        void AccountOptions();//Allows for different types of accounts
+        void AccountOptions();      //Allows for different types of accounts
     
     private:
         string FirstName;
