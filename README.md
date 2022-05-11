@@ -7,11 +7,10 @@
     - Front-End HTML/CSS/JavaScript
     - Database MYSQL
 ## Requirments 
-    - As of Right now needed installation of following tech 
-            * MYSQL
-            * C++ compiler
-            * C++
-            * C++ MYSQL Connector
+    - Required tools/tech installation
+        * C++
+        * MYSQL
+        * libmysqlcppconn-dev
 ## Application Description
     * Allows Creation/Deletion/Update of Accounts
     * Users can have two types of accouts at the moment Checkings/Savings
