@@ -7,7 +7,7 @@
     - Front-End HTML/CSS/JavaScript
     - Database MYSQL
 ## Requirments 
-    - As of Right now needed installtion of following tech 
+    - As of Right now needed installation of following tech 
             * MYSQL
             * C++ compiler
             * C++
