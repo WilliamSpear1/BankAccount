@@ -30,7 +30,7 @@ class Account{
         void   SetFirstName     (string firstName);
         void   SetLastName      (string lastName);
         void   SetAccountNumber (int accountNumber);
-        void   SetAccountType   (string type);
+        void   SetAccountType   (string accountType);
         void   SetAccountAmount (double accountAmount);
         void   AccountCreation  ();
         void   AccountOptions   (); //Allows for different types of accounts
@@ -39,7 +39,7 @@ class Account{
         string      firstName;
         string      lastName;
         int         accountNumber;
-        AccountType type;
+        AccountType accountType;
         double      accountAmount;
 };
 #endif

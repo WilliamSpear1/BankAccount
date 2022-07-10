@@ -115,4 +115,4 @@ void Account::SetAccountType(string type)
 
 }
 
-void Account::SetAccountAmount (double Aamount) { accountAmount = accountAmount; }
+void Account::SetAccountAmount (double accountAmount) { accountAmount = accountAmount; }
