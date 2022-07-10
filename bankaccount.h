@@ -7,37 +7,39 @@ using namespace std;
 
 #ifndef _BANKACCOUNT_H
 #define _BANKACCOUNT_H
+
 enum AccountType {
-    CHECKINGS,SAVINGS
+    CHECKING, 
+    SAVINGS
 };                                  //Types of accounts allowed in the bank
 
 class Account{
     
     public:
-        Account();                  //Default Constructor
-        Account(const Account&);    //Deep Copoy Constructor 
-        ~Account();                 //Deconstructor not needed as of yet??
-        void Setup();               //Inital setup of account for the bank
-        double Deposit(double);
-        double Withdraw(double);
-        string GetFirstName();
-        string GetLastName(); 
-        int GetAccountNumber();
-        double GetBankAmount();
-        string GetType();
-        void SetFirstName(string Fname);
-        void SetLastName(string Lname);
-        void SetAccountNumber(int ANumber);
-        void SetAccountType(string type);
-        void SetAccountAmount(double Aamount);
-        void AccountCreation();
-        void AccountOptions();      //Allows for different types of accounts
+        Account                 ();               //Default Constructor
+        Account                 (const Account&); //Deep Copy Constructor 
+        ~Account                ();               //Deconstructor not needed as of yet??
+        void   Setup            ();               //Inital setup of account for the bank
+        double Deposit          (double);
+        double Withdraw         (double);
+        string GetFirstName     ();
+        string GetLastName      (); 
+        int    GetAccountNumber ();
+        double GetBankAmount    ();
+        string GetType          ();
+        void   SetFirstName     (string firstName);
+        void   SetLastName      (string lastName);
+        void   SetAccountNumber (int accountNumber);
+        void   SetAccountType   (string type);
+        void   SetAccountAmount (double accountAmount);
+        void   AccountCreation  ();
+        void   AccountOptions   (); //Allows for different types of accounts
     
     private:
-        string FirstName;
-        string LastName;
-        int AccountNumber;
+        string      firstName;
+        string      lastName;
+        int         accountNumber;
         AccountType type;
-        double BankAmount;
+        double      accountAmount;
 };
 #endif

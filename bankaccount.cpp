@@ -1,21 +1,21 @@
 #include "bankaccount.h"
-
 Account::Account(){
-    BankAmount = 0.0;
+    accountAmount = 0.0;
 }
 
 //Deconstructor empty for now could possibly be used down the road
 Account::~Account()
 {}
 
-Account::Account(const Account& A)
+Account::Account(const Account& account)
 {
-    AccountNumber = A.AccountNumber;
-    FirstName = A.FirstName; 
-    LastName = A.LastName; 
-    BankAmount = A.BankAmount;
-    type = A.type;
+    accountNumber = account.accountNumber;
+    firstName     = account.firstName; 
+    lastName      = account.lastName; 
+    accountAmount = account.accountAmount;
+    type          = account.type;
 }
+
 void Account::AccountOptions(){
     char answer;
     
@@ -31,7 +31,7 @@ void Account::AccountOptions(){
     switch(answer){
         case 'C':
         case 'c':
-                type = CHECKINGS;
+                type = CHECKING;
                 break;
         case 'S':
         case 's':
@@ -40,7 +40,7 @@ void Account::AccountOptions(){
         default: 
                 cout << "Invaild Option" << endl;
                 cout << "Set to Default Type: Checking" << endl;
-                type = CHECKINGS;
+                type = CHECKING;
                 break;
     }
 }
@@ -51,85 +51,68 @@ void Account::Setup(){
 
     srand(time(NULL));                  //inital seed for randomization
 
-    AccountNumber = rand() % 1000 + 1;  //Random Account number for each account
+    accountNumber = rand() % 1000 + 1;  //Random Account number for each account
     
     AccountOptions();
     
     cout << "Enter first name: ";
-    cin >> FirstName;
+    cin >> firstName;
 
     cout << "Enter last name: ";
-    cin >> LastName; 
+    cin >> lastName; 
 }
 
 double Account::Deposit(double amount){
-    BankAmount = BankAmount + amount;
+    accountAmount = accountAmount + amount;
     cout << "Amount:$ " << amount << " has been successfully added to your account\n";
     cout << "Thank you" << endl;
-    return BankAmount; 
+    return accountAmount; 
 }
 
 double Account::Withdraw(double amount){
-    if(amount > BankAmount)
+    if(amount > accountAmount)
     {
         cout << "Error:$" << amount << " is greater then what is inside bank account\n";
         return 0; 
     }
-    BankAmount = BankAmount - amount;
+
+    accountAmount = accountAmount - amount;
     cout << "Thank you" << " the amount of $" << amount << " has been successfully withdrawn from your account\n";
-    return BankAmount;
+    
+    return accountAmount;
 }
 
-string Account::GetFirstName(){
-    return FirstName;
-}
-
-string Account::GetLastName(){
-    return LastName;
-}
-
-int Account::GetAccountNumber(){
-   return AccountNumber;
-}
-
-double Account::GetBankAmount(){
-    return BankAmount; 
-}
+string Account::GetFirstName  () { return firstName;     }
+string Account::GetLastName   () { return lastName;      }
+int Account::GetAccountNumber () { return accountNumber; }
+double Account::GetBankAmount () { return accountAmount; }
 
 string Account::GetType(){
     string answer;
 
-    if(type == CHECKINGS)
+    if(type == CHECKING)
     {
-        answer = "Checkings";
+        answer = "Checking";
     } 
     else if(type == SAVINGS)
     {
         answer = "Savings";
     }
+
     return answer;
 }
-void  Account::SetFirstName(string Fname)
-{
-    FirstName = Fname;
-}
-void Account::SetLastName(string Lname)
-{
-    LastName = Lname;
-}
-void Account::SetAccountNumber(int ANumber)
-{
-    AccountNumber = ANumber; 
-}
+
+void  Account::SetFirstName    (string Fname) { firstName = firstName;         }
+void Account::SetLastName      (string Lname) { lastName = lastName;           }
+void Account::SetAccountNumber (int ANumber)  { accountNumber = accountNumber; }
+
 void Account::SetAccountType(string type)
 {
     if(type == "Checking")
-        type = CHECKINGS;
+        type = CHECKING;
     else if(type == "Saving")
         type = SAVINGS;
 
 }
-void Account::SetAccountAmount(double Aamount)
-{
-   BankAmount = Aamount;  
-}
+
+void Account::SetAccountAmount (double Aamount) { accountAmount = accountAmount; }
